@@ -9,3 +9,5 @@ You can download the latest release from here: https://github.com/ddeltasolution
 
 Screenshot:<br>
 ![image](https://user-images.githubusercontent.com/24210619/164229746-d14c433e-edc1-498d-8a51-1aea0b9d275d.png)
+
+Note: If you have trouble with opening this program, right click the .exe file, choose Properties from the menu and in the lower part of the Properties dialog box you can see an "Unblock" checkbox. Check it and press Apply and OK.
