@@ -1,0 +1,26 @@
+﻿<Window x:Class="dDeltaSolutions.Spy.MoreAttributes"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:System="clr-namespace:System;assembly=mscorlib"
+        Title="Text Range attributes" Height="350" Width="550" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" ShowInTaskbar="False">
+    
+    <Grid>
+        <Grid.RowDefinitions>
+			<RowDefinition Height="30" />
+			<RowDefinition />
+			<RowDefinition Height="40" />
+		</Grid.RowDefinitions>
+		
+		<TextBlock FontWeight="Bold" HorizontalAlignment="Center" Margin="0,5,0,0">Attributes for this Text Range:</TextBlock>
+		<ListView x:Name="lvAttributes" Grid.Row="1" Margin="5,0,5,0">
+			<ListView.View>
+				<GridView>
+					<GridViewColumn Header="Name" Width="200" DisplayMemberBinding="{Binding Name}"/>
+					<GridViewColumn Header="Value" Width="200" DisplayMemberBinding="{Binding Val}"/>
+				</GridView>
+			</ListView.View>
+		</ListView>
+        
+        <Button x:Name="btnOK" Content="OK" Grid.Row="2" Margin="0,0,23,10" IsDefault="True" IsCancel="True" HorizontalAlignment="Right" Width="75" Height="22" VerticalAlignment="Bottom"/>
+    </Grid>
+</Window>

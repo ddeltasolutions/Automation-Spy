@@ -1,0 +1,238 @@
+﻿<Window x:Class="dDeltaSolutions.Spy.WindowActions"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:System="clr-namespace:System;assembly=mscorlib"
+        xmlns:Automation="clr-namespace:System.Windows.Automation;assembly=UIAutomationTypes"
+        Title="Actions" Height="340" Width="400" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" 
+		Loaded="Window_Loaded" ShowInTaskbar="False" Closing="Window_Closing" PreviewKeyDown="OnKeyDown">
+    <Grid x:Name="grid">
+        <TabControl x:Name="tabCtrl">
+			<TabItem Header="DockPattern" Visibility="Hidden" x:Name="dockTab">
+				<Grid>
+					<Label HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0">Dock Position: </Label>
+					<ComboBox x:Name="cmbDocks" SelectedIndex="0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="90" Margin="100,12,0,0">
+						<ComboBoxItem>None</ComboBoxItem>
+						<ComboBoxItem>Left</ComboBoxItem>
+						<ComboBoxItem>Right</ComboBoxItem>
+						<ComboBoxItem>Top</ComboBoxItem>
+						<ComboBoxItem>Bottom</ComboBoxItem>
+						<ComboBoxItem>Fill</ComboBoxItem>
+					</ComboBox>
+					<Button Content="SetDockPosition" Margin="200,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Height="25" Click="OnDock"/>
+				</Grid>
+			</TabItem>
+			<TabItem Header="ExpandCollapsePattern" Visibility="Hidden" x:Name="expandCollapseTab">
+				<Grid>
+					<Button Content="Expand" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" Height="25" Margin="20,15,0,0" Click="OnExpand" />
+					<Button Content="Collapse" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" Height="25" Margin="20,50,0,0" Click="OnCollapse" />
+				</Grid>
+			</TabItem>
+            <TabItem Header="GridPattern" Visibility="Hidden" x:Name="gridTab">
+				<Grid>
+                    <Label HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0">Row: </Label>
+					<TextBox x:Name="txtRow" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" Height="21" Margin="50,12,0,0"/>
+                    <Label HorizontalAlignment="Left" VerticalAlignment="Top" Margin="125,10,0,0">Column: </Label>
+                    <TextBox x:Name="txtColumn" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" Height="21" Margin="185,12,0,0"/>
+					<Button Content="GetItem" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" Height="25" Margin="270,10,0,0" Click="OnGetItem" />
+                    
+                    <Label HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,60,0,0">GetItem(row,column) result: </Label>
+                    <TextBox x:Name="txtInfo" HorizontalScrollBarVisibility="Auto" HorizontalAlignment="Left" VerticalAlignment="Top" Width="235" Height="123" Margin="10,87,0,0"/>
+                    <Button Content="Highlight" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" Height="25" Margin="270,185,0,0" Click="OnHighlight" />
+                    <!-- <Button Content="Go to..." HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" Height="25" Margin="270,185,0,0" Click="OnGoTo" /> -->
+				</Grid>
+			</TabItem>
+			<TabItem Header="InvokePattern" Visibility="Hidden" x:Name="invokeTab">
+				<Grid>
+					<Button Content="Invoke" Width="60" Height="25" Click="OnInvoke"/>
+				</Grid>
+			</TabItem>
+			<TabItem Header="MultipleViewPattern" Visibility="Hidden" x:Name="mvTab">
+				<Grid>
+					<Label HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,10,0,0">Supported Views: </Label>
+					<ComboBox x:Name="cmbViews" SelectedIndex="0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="110" Margin="103,12,0,0"/>
+					<Button Content="SetCurrentView" Margin="220,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Height="25" Click="OnSetCurrentView"/>
+				</Grid>
+			</TabItem>
+			<TabItem Header="RangeValuePattern" Visibility="Hidden" x:Name="rvTab">
+				<Grid>
+					<Label HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0">Value: </Label>
+					<TextBox x:Name="txtRValue" HorizontalAlignment="Left" VerticalAlignment="Top" Width="115" Margin="55,14,0,0"/>
+					<Button Content="SetValue" Margin="180,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" Height="25" Click="OnSetRValue"/>
+				</Grid>
+			</TabItem>
+            <TabItem Header="ScrollPattern" Visibility="Hidden" x:Name="scrollTab">
+				<Grid>
+				
+					<GroupBox HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,0,0" Height="110" Width="385">
+					<Grid>
+						<Label HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,10,0,0">Horizontal Amount:</Label>
+						<ComboBox x:Name="cmbHorizontalAmt" SelectedIndex="2" HorizontalAlignment="Left" VerticalAlignment="Top" Width="195" Margin="115,12,0,0">
+							<ComboBoxItem>ScrollAmount_LargeDecrement</ComboBoxItem>
+							<ComboBoxItem>ScrollAmount_SmallDecrement</ComboBoxItem>
+							<ComboBoxItem>ScrollAmount_NoAmount</ComboBoxItem>
+							<ComboBoxItem>ScrollAmount_LargeIncrement</ComboBoxItem>
+							<ComboBoxItem>ScrollAmount_SmallIncrement</ComboBoxItem>
+						</ComboBox>
+						<Label HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,40,0,0">Vertical Amount:</Label>
+						<ComboBox x:Name="cmbVerticalAmt" SelectedIndex="2" HorizontalAlignment="Left" VerticalAlignment="Top" Width="195" Margin="115,42,0,0">
+							<ComboBoxItem>ScrollAmount_LargeDecrement</ComboBoxItem>
+							<ComboBoxItem>ScrollAmount_SmallDecrement</ComboBoxItem>
+							<ComboBoxItem>ScrollAmount_NoAmount</ComboBoxItem>
+							<ComboBoxItem>ScrollAmount_LargeIncrement</ComboBoxItem>
+							<ComboBoxItem>ScrollAmount_SmallIncrement</ComboBoxItem>
+						</ComboBox>
+						<Button Content="Scroll" Margin="90,72,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="130" Height="25" Click="OnScroll"/>
+					</Grid>
+					</GroupBox>
+				
+					<GroupBox HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,125,0,0" Height="117" Width="385">
+					<Grid>	
+						<Label HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,0,0">Horizontal Percent:</Label>
+						<Label HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,15,0,0">(leave empty for</Label>
+						<Label HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,30,0,0">UIA_ScrollPatternNoScroll)</Label>
+						<TextBox x:Name="txtHorizontalPercent" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50" Height="22" Margin="155,10,0,0"></TextBox>
+						<Label HorizontalAlignment="Left" VerticalAlignment="Top" Margin="210,10,0,0">%</Label>
+						<Label HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,55,0,0">Vertical Percent:</Label>
+						<Label HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,70,0,0">(leave empty for</Label>
+						<Label HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,85,0,0">UIA_ScrollPatternNoScroll)</Label>
+						<TextBox x:Name="txtVerticalPercent" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50" Height="22" Margin="155,65,0,0"></TextBox>
+						<Label HorizontalAlignment="Left" VerticalAlignment="Top" Margin="210,65,0,0">%</Label>
+						<Button Content="SetScrollPercent" Margin="240,35,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="130" Height="25" Click="OnSetScrollPercent"/>
+					</Grid>
+					</GroupBox>
+				</Grid>
+			</TabItem>
+			<TabItem Header="ScrollItemPattern" Visibility="Hidden" x:Name="siTab">
+				<Grid>
+					<Button Content="ScrollIntoView" Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Height="25" Click="OnScrollIntoView"/>
+				</Grid>
+			</TabItem>
+			<TabItem Header="SelectionItemPattern" Visibility="Hidden" x:Name="selITab">
+				<Grid>
+					<Button Content="AddToSelection" Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="130" Height="25" Click="OnAddToSelection"/>
+					<Button Content="RemoveFromSelection" Margin="10,40,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="130" Height="25" Click="OnRemoveFromSelection"/>
+					<Button Content="Select" Margin="10,70,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="130" Height="25" Click="OnSelect"/>
+				</Grid>
+			</TabItem>
+			<TabItem Header="TextPattern" Visibility="Hidden" x:Name="textTab">
+				<Grid>
+					<Label HorizontalAlignment="Left" VerticalAlignment="Top" Margin="30,10,0,0">Select Range: </Label>
+					<ComboBox x:Name="cmbRanges" SelectedIndex="0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="140" Margin="115,12,0,0"/>
+					<ToggleButton x:Name="pickBtn" Content="RangeFromPoint" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Width="100" Margin="265,10,0,0" ToolTipService.ShowDuration="20000" Click="PickFromScreen"/>
+					<TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Margin="375,5,0,0">Check the tooltip of<LineBreak/>RangeFromPoint button</TextBlock>
+					
+					<Button Content="AddToSelection" Margin="10,55,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Height="25" Click="OnTextAddToSelection"/>
+					<Button Content="RemoveFromSelection" Margin="120,55,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="130" Height="25" Click="OnTextRemoveFromSelection"/>
+					<Button Content="Select" Margin="260,55,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Height="25" Click="OnTextSelect"/>
+					<Button Content="GetText" Margin="370,55,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Height="25" Click="OnGetText"/>
+					<!--<GroupBox Header="" Height="100" Margin="0,10,0,0"><Grid> -->
+					<!-- <Label HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,80,0,0">Align To Top: </Label> -->
+					<!-- <ComboBox x:Name="cmbAlign" SelectedIndex="0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" Margin="90,82,0,0">
+						<ComboBoxItem>True</ComboBoxItem>
+						<ComboBoxItem>False</ComboBoxItem>
+					</ComboBox> -->
+					<CheckBox x:Name="chkAlign" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,100,0,0">Align To Top</CheckBox>
+					<Button Content="ScrollIntoView" Margin="109,94,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Height="25" Click="OnTextScrollIntoView"/>
+					<Button Content="GetEnclosingElement" Margin="370,94,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="130" Height="25" Click="OnGetEnclosingElement"/>
+					<!-- <Button Content="GetText" Margin="260,90,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Height="25" Click="OnGetText"/> -->
+					<!-- </Grid></GroupBox> -->
+					<!-- <Button Content="Select" Margin="10,90,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Height="25" Click="OnTextSelect"/> -->
+					<Label HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,133,0,0">Text Unit: </Label>
+					<ComboBox x:Name="cmbTextUnit" SelectedIndex="0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="132" Margin="75,135,0,0"/>
+					<Button Content="ExpandToEnclosingUnit" Margin="215,133,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="140" Height="25" Click="OnExpandToEnclosingUnit"/>
+					
+					<Label HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,172,0,0">Text Unit: </Label>
+					<ComboBox x:Name="cmbTextUnitM" SelectedIndex="0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="132" Margin="75,174,0,0"/>
+					<Label HorizontalAlignment="Left" VerticalAlignment="Top" Margin="212,172,0,0">Count: </Label>
+					<TextBox x:Name="txtCount" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="262,177,0,0" Width="50"/>
+					<Button Content="Move" Margin="330,172,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" Height="25" Click="OnTextMove"/>
+					
+                    <GroupBox HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10, 211, 0, 0" Height="70" Width="490">
+                        <Grid HorizontalAlignment="Left" VerticalAlignment="Top" Height="70" Width="490" Margin="0,0,0,0">
+                            <Label HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0">Endpoint: </Label>
+                            <ComboBox x:Name="cmbEndpoint" SelectedIndex="0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Margin="60,5,0,0"/>
+                            <Label HorizontalAlignment="Left" VerticalAlignment="Top" Margin="260,5,0,0">Text Unit: </Label>
+                            <ComboBox x:Name="cmbTextUnitME" SelectedIndex="0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="132" Margin="320,5,0,0"/>
+                            <Label HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,35,0,0">Count: </Label>
+                            <TextBox x:Name="txtCountME" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="45,40,0,0" Width="50"/>
+                            <Button Content="MoveEndpointByUnit" Margin="110,35,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="125" Height="25" Click="OnMoveEndpointByUnit"/>
+                        </Grid>
+                    </GroupBox>
+					
+					<Button HorizontalAlignment="Left" Click="OnHighlightRange" VerticalAlignment="Top" Margin="10,290,0,0" Width="100" Height="25">Highlight Range</Button>
+					<Button HorizontalAlignment="Left" Click="OnRangeProperties" VerticalAlignment="Top" Margin="130,290,0,0" Width="130" Height="25">Get Range Properties</Button>
+				</Grid>
+			</TabItem>
+			<TabItem Header="TogglePattern" Visibility="Hidden" x:Name="toggleTab">
+				<Grid>
+					<Button Content="Toggle" Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Height="25" Click="OnToggle"/>
+				</Grid>
+			</TabItem>
+			<TabItem Header="TransformPattern" Visibility="Hidden" x:Name="transformTab">
+				<Grid>
+					<GroupBox Header="" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,0,0,0">
+					<Grid>
+						<Label HorizontalAlignment="Left" VerticalAlignment="Top" Width="55" HorizontalContentAlignment="Right">X:</Label>
+						<TextBox x:Name="txtX" HorizontalAlignment="Left" VerticalAlignment="Top" Width="90" Margin="60,4,0,0"/>
+						<Label HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,30,0,0" Width="55" HorizontalContentAlignment="Right">Y:</Label>
+						<TextBox x:Name="txtY" HorizontalAlignment="Left" VerticalAlignment="Top" Width="90" Margin="60,34,0,0"/>
+						<Button Content="Move" Margin="155,17,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" Height="25" Click="OnMove"/>
+					</Grid>
+					</GroupBox>
+					
+					<GroupBox Header="" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,85,0,0">
+					<Grid>
+						<Label HorizontalAlignment="Left" VerticalAlignment="Top" Width="55" HorizontalContentAlignment="Right">Width:</Label>
+						<TextBox x:Name="txtWidth" HorizontalAlignment="Left" VerticalAlignment="Top" Width="90" Margin="60,4,0,0"/>
+						<Label HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,30,0,0" Width="55" HorizontalContentAlignment="Right">Height:</Label>
+						<TextBox x:Name="txtHeight" HorizontalAlignment="Left" VerticalAlignment="Top" Width="90" Margin="60,34,0,0"/>
+						<Button Content="Resize" Margin="155,17,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" Height="25" Click="OnResize"/>
+					</Grid>
+					</GroupBox>
+					
+					<GroupBox Header="" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,170,0,0">
+					<Grid>
+						<Label HorizontalAlignment="Left" VerticalAlignment="Top" Width="55" HorizontalContentAlignment="Right">Degrees:</Label>
+						<TextBox x:Name="txtDegrees" HorizontalAlignment="Left" VerticalAlignment="Top" Width="90" Margin="60,4,0,0"/>
+						<Button Content="Rotate" Margin="155,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" Height="25" Click="OnRotate"/>
+					</Grid>
+					</GroupBox>
+				</Grid>
+			</TabItem>
+			<TabItem Header="ValuePattern" Visibility="Hidden" x:Name="valueTab">
+				<Grid>
+					<Label HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0">Value: </Label>
+					<TextBox x:Name="txtValue" HorizontalAlignment="Left" VerticalAlignment="Top" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible" Width="230" Margin="55,14,0,0"/>
+					<Button Content="SetValue" Margin="293,14,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" Height="25" Click="OnSetValue"/>
+				</Grid>
+			</TabItem>
+			<TabItem Header="WindowPattern" Visibility="Hidden" x:Name="windowTab">
+				<Grid>
+					<Label HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0">Window Visual State: </Label>
+					<ComboBox x:Name="cmbVisualStates" SelectedIndex="0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Margin="135,12,0,0">
+						<ComboBoxItem>Normal</ComboBoxItem>
+						<ComboBoxItem>Minimized</ComboBoxItem>
+						<ComboBoxItem>Maximized</ComboBoxItem>
+					</ComboBox>
+					<Button Content="SetWindowVisualState" ToolTip="Calls WindowPattern.SetWindowVisualState method" Margin="50,45,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="130" Height="25" Click="OnSetWindowVisualState"/>
+				</Grid>
+			</TabItem>
+            <TabItem Header="VirtualizedItemPattern" Visibility="Hidden" x:Name="virtualizeTab">
+				<Grid>
+					<Button Content="Realize" Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Height="25" Click="OnRealize"/>
+				</Grid>
+			</TabItem>
+            <TabItem Header="LegacyIAccessiblePattern" Visibility="Hidden" x:Name="legacyIAccTab">
+				<Grid>
+					<Label HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,12,0,0">Flags: </Label>
+					<TextBox x:Name="txtIAccFlags" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Margin="55,16,0,0"/>
+					<Button Content="Select" Margin="160,12,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" Height="25" Click="OnIAccSelect"/>
+                    <Button Content="DoDefaultAction" Margin="15,51,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Height="25" Click="OnIAccDoDefaultAction"/>
+                    <Label HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,90,0,0">Value: </Label>
+					<TextBox x:Name="txtIAccValue" HorizontalAlignment="Left" VerticalAlignment="Top" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible" Width="230" Margin="55,94,0,0"/>
+					<Button Content="SetValue" Margin="290,94,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" Height="25" Click="OnIAccSetValue"/>
+				</Grid>
+			</TabItem>
+		</TabControl>
+    </Grid>
+</Window>

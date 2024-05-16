@@ -1,0 +1,22 @@
+﻿<Window x:Class="dDeltaSolutions.Spy.WindowAllText"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:System="clr-namespace:System;assembly=mscorlib"
+        Title="All Text" Height="350" Width="470" Loaded="Window_Loaded" WindowStartupLocation="CenterOwner" 
+		ShowInTaskbar="False" WindowStyle="ToolWindow">
+    <Grid>
+        <Grid.RowDefinitions>
+			<RowDefinition Height="30" />
+			<RowDefinition />
+			<RowDefinition Height="40" />
+		</Grid.RowDefinitions>
+		
+		<TextBlock x:Name="txbTitle" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,5,0,0">All text:</TextBlock>
+		<TextBox Grid.Row="1" x:Name="txtAllText" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5,5,5,5" IsReadOnly="True"
+			ScrollViewer.VerticalScrollBarVisibility="Auto" TextWrapping="Wrap"></TextBox>
+		<Button x:Name="btnOK" Content="Close" Grid.Row="2" Margin="0,0,15,10" IsCancel="True" HorizontalAlignment="Right" Width="75" Height="22" VerticalAlignment="Bottom"/>
+		<Button Content="Copy to clipboard" Click="OnCopyClick" Grid.Row="2" Margin="0,0,100,10" HorizontalAlignment="Right" Width="120" Height="22" VerticalAlignment="Bottom"/>
+		
+		<TextBlock x:Name="txbLabel" Grid.Row="2" FontWeight="Bold" Foreground="Blue" HorizontalAlignment="Left" Margin="5,10,0,0" Visibility="Hidden">Copied</TextBlock>
+    </Grid>
+</Window>

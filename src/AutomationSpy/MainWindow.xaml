@@ -1,0 +1,205 @@
+﻿<Window x:Class="dDeltaSolutions.Spy.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Automation Spy" Height="370" Width="655" Loaded="Window_Loaded" KeyDown="tvElements_KeyDown" Unloaded="Window_Unloaded" Icon="Pictures/30x30xautomationspy.png" Closing="Window_Closing">
+    <Grid x:Name="mainGrid">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+		
+		<DockPanel Height="20" VerticalAlignment="Top">
+			<Menu DockPanel.Dock="Top">
+				<MenuItem Header="Pick">
+					<MenuItem Header="Element from Screen (By moving the mouse cursor over the desired element and holding Ctrl key pressed)" x:Name="menuItemPick" Click="menuItemPick_Click" />
+					<MenuItem Header="Track Focused Element - The application keeps selecting the currently focused element" x:Name="menuItemTrack" Click="menuItemTrack_Click" />
+				</MenuItem>
+				<MenuItem Header="Highlight">
+					<MenuItem Header="Highlight Selected Item" x:Name="menuHighlightSelected" Click="menuHighlightSelected_Click" />
+					<MenuItem Header="Highlight Clickable Point" x:Name="menuClickablePoint" Click="menuClickablePoint_Click" />
+				</MenuItem>
+				<MenuItem Header="Refresh">
+					<MenuItem Header="Refresh Selected Item (F5)" Click="buttonRefresh_Click" />
+				</MenuItem>
+				<MenuItem Header="Events">
+					<MenuItem Header="Start Capturing Events" x:Name="menuStartCapturing" Click="OnEvents" ToolTipService.ShowDuration="10000" ToolTip="Start capturing UI Automation events for the selected element" />
+					<MenuItem Header="Events Settings" x:Name="menuEventsSettings" Click="OnEventsSettings"/>
+				</MenuItem>
+				<MenuItem Header="Actions">
+					<MenuItem Header="Actions using Control Patterns" Click="OnActions" ToolTipService.ShowDuration="10000" ToolTip="Actions available for the selected element" />
+				</MenuItem>
+				<MenuItem Header="Settings">
+					<MenuItem Header="Choose what properties to show" Click="optionsButton_Click" />
+					<MenuItem Header="Always on top" Click="AlwaysOnTop_Click" x:Name="menuAlwaysOnTop" />
+				</MenuItem>
+			</Menu>
+			<!-- <TextBox AcceptsReturn="True" Visibility="Hidden" /> -->
+		</DockPanel>
+
+        <TreeView x:Name="tvElements" Margin="10,50,10,30" SelectedItemChanged="tvElements_SelectedItemChanged">
+            <TreeView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Refresh" Click="RefreshItem"/>
+                    <MenuItem Header="Highlight" Click="HighlightItem"/>
+					<MenuItem Header="Copy Text" Click="OnCopyText"/>
+					<MenuItem Header="Set Focus" Click="OnSetFocus"/>
+					<MenuItem Header="Start Capturing Events" x:Name="eventsMenu" Click="OnEvents"/>
+					<MenuItem Header="Actions" Click="OnActions"/>
+					<MenuItem Header="Show Clickable Point" Click="OnShowCP" IsCheckable="True" x:Name="showCPMenuItem"/>
+					<MenuItem Header="Show Context Menu" Click="OnShowContextMenu" ToolTip="IUIAutomationElement3.ShowContextMenu()"/>
+                    <MenuItem Header="Capture" Click="OnCapture"/>
+                </ContextMenu>
+            </TreeView.ContextMenu>
+        </TreeView>
+        <Button x:Name="buttonRefresh" HorizontalAlignment="Left" Margin="10,21,0,0" VerticalAlignment="Top" Width="24" Height="24" Click="buttonRefresh_Click" ToolTip="Refresh tree (F5)">
+            <StackPanel>
+                <Image Source="Pictures/32x32xrefresh.png" Stretch="Fill"/>
+            </StackPanel>
+        </Button>
+        <ToggleButton x:Name="buttonHighlight" HorizontalAlignment="Left" Margin="37,21,0,0" VerticalAlignment="Top" Width="24" Height="24" ToolTip="Highlight selected element" Click="buttonHighlight_Click">
+            <StackPanel>
+                <Image Source="Pictures/28x28xHighlight.png" Stretch="Fill"/>
+            </StackPanel>
+        </ToggleButton>
+
+        <GridSplitter Grid.Column="1"
+              HorizontalAlignment="Center"
+              VerticalAlignment="Stretch"
+              Background="DarkGray" 
+              ShowsPreview="True"
+              Width="5"
+              />
+        <ToggleButton x:Name="selectButton" HorizontalAlignment="Left" Margin="64,21,0,0" VerticalAlignment="Top" Width="24" Height="24" ToolTip="When this button is pressed, select element moving the mouse pointer over it and holding Ctrl pressed" ToolTipService.ShowDuration="10000" Click="OnSelectElement">
+            <StackPanel>
+                <Image Source="Pictures/32x32xPointer.png" Stretch="Fill"/>
+            </StackPanel>
+        </ToggleButton>
+
+        <Button x:Name="eventsPropButton" HorizontalAlignment="Left" Margin="100,21,0,0" VerticalAlignment="Top" Width="24" Height="24" ToolTip="Events settings" Click="OnEventsSettings">
+            <StackPanel>
+                <Image Source="Pictures/evProp.png" Stretch="Fill"/>
+            </StackPanel>
+        </Button>
+        <ToggleButton x:Name="eventsButton" HorizontalAlignment="Left" Margin="129,21,0,0" VerticalAlignment="Top" Width="24" Height="24" ToolTip="Start capturing UI Automation events for the selected element" Click="OnEvents">
+            <StackPanel>
+                <Image Source="Pictures/Play.png" Stretch="Fill"/>
+            </StackPanel>
+        </ToggleButton>
+        
+		<ToggleButton x:Name="actionsButton" HorizontalAlignment="Left" Margin="163,21,0,0" VerticalAlignment="Top" Width="24" Height="24" ToolTip="Actions for the selected element" Click="OnActions">
+            <StackPanel>
+                <Image Source="Pictures/32x32actions.png" Stretch="Fill"/>
+            </StackPanel>
+        </ToggleButton>
+        <TabControl x:Name="tabCtrl" Grid.Column="2" Margin="0,1,5,0">
+            <TabItem x:Name="tabAttributes" Header="Properties" ToolTip="Automation Properties">
+                <Grid Background="#FFE5E5E5" Margin="0,0,0,0">
+                    <ListView x:Name="attributesListView">
+                        <ListView.ContextMenu>
+                            <ContextMenu Loaded="OnAttributesContextLoaded" Unloaded="OnAttributesContextUnloaded">
+                                <MenuItem Header="Copy Value" Click="OnClickCopyValue"/>
+                                <MenuItem Header="Copy All Properties" Click="OnClickCopyAllAttributes"/>
+								<MenuItem Header="Refresh" Click="RefreshControlPatterns"/>
+                            </ContextMenu>
+                        </ListView.ContextMenu>
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Name" HeaderStringFormat="Name" Width="110" DisplayMemberBinding="{Binding Name}"/>
+                                <GridViewColumn Header="Value" HeaderStringFormat="Value" Width="140" DisplayMemberBinding="{Binding Value}"/>
+                            </GridView>
+                        </ListView.View>
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="{x:Type ListViewItem}">
+                                <Setter Property="ToolTip" Value="{Binding Tooltip}"/>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                    </ListView>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="tabPatterns" Header="Control Patterns" ToolTip="Control Patterns">
+                <Grid Background="#FFE5E5E5" Margin="0,0,0,0">
+                    <ListView x:Name="patternsListView">
+                        <ListView.ContextMenu>
+                            <ContextMenu Loaded="OnPatternsContextLoaded" Unloaded="OnPatternsContextUnloaded">
+                                <MenuItem Header="Copy Value" Click="OnClickCopyValuePattern"/>
+                                <MenuItem Header="Refresh" Click="RefreshControlPatterns"/>
+                            </ContextMenu>
+                        </ListView.ContextMenu>
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Name" Width="110" DisplayMemberBinding="{Binding Name}"/>
+                                <GridViewColumn Header="Value" Width="140" DisplayMemberBinding="{Binding Value}"/>
+                            </GridView>
+                        </ListView.View>
+
+                        <ListView.GroupStyle>
+                            <GroupStyle>
+                                <GroupStyle.HeaderTemplate>
+                                    <DataTemplate>
+                                        <TextBlock FontWeight="Bold" FontSize="14" Text="{Binding Name}"/>
+                                    </DataTemplate>
+                                </GroupStyle.HeaderTemplate>
+                            </GroupStyle>
+                        </ListView.GroupStyle>
+
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="{x:Type ListViewItem}">
+                                <Setter Property="ToolTip" Value="{Binding Tooltip}"/>
+								<EventSetter Event="MouseDoubleClick" Handler="OnListViewDoubleClick" />
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                    </ListView>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="tabEvents" Header="Events" ToolTip="Captured events">
+                <TabItem.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem x:Name="goToElementMenuItem" Header="Go to element" Click="MenuItemGoTo_Click"/>
+                        <MenuItem x:Name="highlightElementMenuItem" Header="Highlight element" Click="MenuItemHighlight_Click"/>
+						<MenuItem x:Name="menuItemClearSelected" Header="Clear Selected" Click="MenuItemClearSelected_Click"/>
+                        <MenuItem x:Name="menuItemClear" Header="Clear All" Click="MenuItemClear_Click"/>
+                    </ContextMenu>
+                </TabItem.ContextMenu>
+                <Grid Background="#FFE5E5E5" Margin="0,0,0,0">
+                    <ListView x:Name="eventsListView">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Event Id" HeaderStringFormat="Event Id" Width="110" DisplayMemberBinding="{Binding EventIdString}"/>
+                                <GridViewColumn Header="Element" HeaderStringFormat="Element" Width="120" DisplayMemberBinding="{Binding ElementString}"/>
+                                <GridViewColumn Header="Details" HeaderStringFormat="Details" Width="120" DisplayMemberBinding="{Binding Details}"/>
+                            </GridView>
+                        </ListView.View>
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="{x:Type ListViewItem}">
+                                <Setter Property="ToolTip" Value="{Binding Tooltip}"/>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                    </ListView>
+                </Grid>
+            </TabItem>
+        </TabControl>
+        <Button x:Name="aboutButton" Height="24" Margin="0,21,10,0" VerticalAlignment="Top" Click="aboutButton_Click" HorizontalAlignment="Right" Width="24" ToolTip="About">
+            <StackPanel>
+                <Image Source="Pictures/32x32xabout.png" Stretch="Fill"/>
+            </StackPanel>
+        </Button>
+        <Button x:Name="optionsButton" HorizontalAlignment="Right" Width="24" Height="24" VerticalAlignment="Top" Margin="0,21,92,0" Click="optionsButton_Click" ToolTip="Choose what properties to show">
+            <StackPanel>
+                <Image Source="Pictures/options.png" Stretch="Fill"/>
+            </StackPanel>
+        </Button>
+
+        <Button x:Name="helpButton" Background="Yellow" HorizontalAlignment="Right" Width="50" Height="24" VerticalAlignment="Top" Margin="0,21,38,0" Click="helpButton_Click" ToolTip="Click for help">
+            <StackPanel>
+                <TextBlock FontFamily="Segoe Print" Foreground="Blue" FontWeight="Bold">Help</TextBlock>
+            </StackPanel>
+        </Button>
+        <ComboBox x:Name="cmbViewMode" HorizontalAlignment="Left" Margin="100,0,0,4" Width="120" SelectionChanged="CmbViewMode_SelectionChanged" Height="22" VerticalAlignment="Bottom">
+            <ComboBoxItem Name="cmbControl" IsSelected="True">Control View</ComboBoxItem>
+            <ComboBoxItem Name="cmbRaw">Raw View</ComboBoxItem>
+            <ComboBoxItem Name="cmbContent">Content View</ComboBoxItem>
+        </ComboBox>
+        <Label Content="View Type:" HorizontalAlignment="Left" Margin="10,0,0,2" Width="78" Height="26" VerticalAlignment="Bottom"/>
+    </Grid>
+</Window>
