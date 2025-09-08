@@ -82,7 +82,7 @@ namespace dDeltaSolutions.Spy
 			this.Title = MainWindow.AppName;
         }
 
-        public static string Version = "4.3.0.0";
+        public static string Version = "4.5.0.0";
 		public static string AppName = "Automation Spy";
         public static CUIAutomation8 uiAutomation = null;
 

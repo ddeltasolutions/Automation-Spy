@@ -996,6 +996,24 @@ namespace dDeltaSolutions.Spy
 			}
 			#endregion
 			
+			if (patternsIds[UIA_PatternIds.UIA_ObjectModelPatternId].IsSupported)
+			{
+				IUIAutomationObjectModelPattern objectModelPattern = node.Element.GetCurrentPattern(UIA_PatternIds.UIA_ObjectModelPatternId) as IUIAutomationObjectModelPattern;
+				if (objectModelPattern != null)
+				{
+					try
+					{
+						object underlyingObjectModel = objectModelPattern.GetUnderlyingObjectModel();
+						if (underlyingObjectModel != null)
+						{
+							attribute = new Attribute("UnderlyingObjectModel:", underlyingObjectModel.ToString(), "UIA_ObjectModelPattern");
+							this.listPatterns.Add(attribute);
+						}
+					}
+					catch {}
+				}
+			}
+			
 			if (patternsIds[UIA_PatternIds.UIA_AnnotationPatternId].IsSupported)
 			{
 				IUIAutomationAnnotationPattern annotationPattern = node.Element.GetCurrentPattern(UIA_PatternIds.UIA_AnnotationPatternId) as IUIAutomationAnnotationPattern;
@@ -1964,14 +1982,14 @@ namespace dDeltaSolutions.Spy
                 Attribute attribute = attr as Attribute;
                 if (attribute != null)
                 {
-                    text += (attribute.Name + " " + GetAttributeString(attribute) + Environment.NewLine);
+                    text += (attribute.Name + " " + GetAttributeString(attribute, true) + Environment.NewLine);
                 }
             }
 
             System.Windows.Clipboard.SetText(text);
         }
 
-        private string GetAttributeString(Attribute attribute)
+        private string GetAttributeString(Attribute attribute, bool copyAll = false)
         {
             try
             {
@@ -1992,7 +2010,11 @@ namespace dDeltaSolutions.Spy
 						}
 
                         //return ("Name: \"" + nameString + "\"");
-						return ("\"" + nameString + "\"");
+						if (copyAll == true)
+						{
+							return ("\"" + nameString + "\"");
+						}
+						return nameString;
                     }
                 }
                 
@@ -2002,7 +2024,18 @@ namespace dDeltaSolutions.Spy
             try
             {
                 //return (attribute.Name + " " + attribute.Value);
-				return attribute.Value;
+				if (copyAll == true)
+				{
+					return attribute.Value;
+				}
+				
+				string value = attribute.Value;
+				int length = value.Length;
+				if (value.StartsWith("\"") && value.EndsWith("\"") && length >= 2)
+				{
+					return value.Remove(length - 1, 1).Remove(0, 1);
+				}
+				return value;
             }
             catch { }
 
