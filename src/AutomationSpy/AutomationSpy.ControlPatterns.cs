@@ -1963,30 +1963,63 @@ namespace dDeltaSolutions.Spy
 
         private void OnClickCopyValue(object sender, RoutedEventArgs e)
         {
-            Attribute attribute = this.attributesListView.SelectedItem as Attribute;
-            if (attribute == null)
-            {
-                return;
-            }
+			try
+			{
+				Attribute attribute = this.attributesListView.SelectedItem as Attribute;
+				if (attribute == null)
+				{
+					return;
+				}
 
-            string attrString = GetAttributeString(attribute);
-            System.Windows.Clipboard.SetText(attrString);
+				string attrString = GetAttributeString(attribute);
+				System.Windows.Clipboard.SetText(attrString);
+			}
+			catch (Exception ex)
+			{
+				System.Windows.MessageBox.Show(ex.Message);
+			}
         }
 
         private void OnClickCopyAllAttributes(object sender, RoutedEventArgs e)
         {
-            string text = "";
+			try
+			{
+				string text = "";
 
-            foreach (object attr in attributesListView.Items)
-            {
-                Attribute attribute = attr as Attribute;
-                if (attribute != null)
-                {
-                    text += (attribute.Name + " " + GetAttributeString(attribute, true) + Environment.NewLine);
-                }
-            }
+				foreach (object attr in attributesListView.Items)
+				{
+					Attribute attribute = attr as Attribute;
+					if (attribute != null)
+					{
+						text += (attribute.Name + " " + GetAttributeString(attribute, true) + Environment.NewLine);
+					}
+				}
 
-            System.Windows.Clipboard.SetText(text);
+				System.Windows.Clipboard.SetText(text);
+			}
+			catch (Exception ex)
+			{
+				System.Windows.MessageBox.Show(ex.Message);
+			}
+        }
+		
+		private void OnClickCopyPropNameAndValue(object sender, RoutedEventArgs e)
+        {
+			try
+			{
+				Attribute attribute = this.attributesListView.SelectedItem as Attribute;
+				if (attribute == null)
+				{
+					return;
+				}
+
+				string attrString = attribute.Name + " " + GetAttributeString(attribute, true);
+				System.Windows.Clipboard.SetText(attrString);
+			}
+			catch (Exception ex)
+			{
+				System.Windows.MessageBox.Show(ex.Message);
+			}
         }
 
         private string GetAttributeString(Attribute attribute, bool copyAll = false)

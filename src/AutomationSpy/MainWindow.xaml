@@ -99,14 +99,15 @@
                         <ListView.ContextMenu>
                             <ContextMenu Loaded="OnAttributesContextLoaded" Unloaded="OnAttributesContextUnloaded">
                                 <MenuItem Header="Copy Value" Click="OnClickCopyValue"/>
-                                <MenuItem Header="Copy All Properties" Click="OnClickCopyAllAttributes"/>
 								<MenuItem Header="Refresh" Click="RefreshControlPatterns"/>
+								<MenuItem Header="Copy All Properties" Click="OnClickCopyAllAttributes"/>
+								<MenuItem Header="Copy Property Name and Value" Click="OnClickCopyPropNameAndValue"/>
                             </ContextMenu>
                         </ListView.ContextMenu>
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Name" HeaderStringFormat="Name" Width="110" DisplayMemberBinding="{Binding Name}"/>
-                                <GridViewColumn Header="Value" HeaderStringFormat="Value" Width="140" DisplayMemberBinding="{Binding Value}"/>
+                                <GridViewColumn Header="Value" HeaderStringFormat="Value" Width="Auto" DisplayMemberBinding="{Binding Value}"/>
                             </GridView>
                         </ListView.View>
                         <ListView.ItemContainerStyle>

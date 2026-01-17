@@ -71,7 +71,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(159, 13);
             this.label2.TabIndex = 2;
-            this.label2.Text = "©2014 - 2024 - dDelta Solutions";
+            this.label2.Text = "©2014 - 2026 - dDelta Solutions";
             // 
             // label3
             // 
