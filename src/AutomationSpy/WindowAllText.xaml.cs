@@ -53,7 +53,7 @@ namespace dDeltaSolutions.Spy
 		
 		private void OnCopyClick(object sender, RoutedEventArgs e)
 		{
-			Clipboard.SetText(txtAllText.Text);
+			System.Windows.Forms.Clipboard.SetText(txtAllText.Text);
 			txtAllText.SelectAll();
 			txtAllText.Focus();
 			

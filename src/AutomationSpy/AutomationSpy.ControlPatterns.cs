@@ -1972,7 +1972,7 @@ namespace dDeltaSolutions.Spy
 				}
 
 				string attrString = GetAttributeString(attribute);
-				System.Windows.Clipboard.SetText(attrString);
+				System.Windows.Forms.Clipboard.SetText(attrString);
 			}
 			catch (Exception ex)
 			{
@@ -1995,7 +1995,7 @@ namespace dDeltaSolutions.Spy
 					}
 				}
 
-				System.Windows.Clipboard.SetText(text);
+				System.Windows.Forms.Clipboard.SetText(text);
 			}
 			catch (Exception ex)
 			{
@@ -2014,7 +2014,7 @@ namespace dDeltaSolutions.Spy
 				}
 
 				string attrString = attribute.Name + " " + GetAttributeString(attribute, true);
-				System.Windows.Clipboard.SetText(attrString);
+				System.Windows.Forms.Clipboard.SetText(attrString);
 			}
 			catch (Exception ex)
 			{
@@ -2093,7 +2093,7 @@ namespace dDeltaSolutions.Spy
                     {
                         IUIAutomationValuePattern valuePattern = node.Element.GetCurrentPattern(UIA_PatternIds.UIA_ValuePatternId) as IUIAutomationValuePattern;
                         string value = valuePattern.CurrentValue;
-                        System.Windows.Clipboard.SetText(value);
+                        System.Windows.Forms.Clipboard.SetText(value);
                         return;
                     }
                 }
@@ -2105,7 +2105,7 @@ namespace dDeltaSolutions.Spy
                     if (textPatternRange != null)
                     {
                         string text = textPatternRange.GetText(-1);
-                        System.Windows.Clipboard.SetText(text);
+                        System.Windows.Forms.Clipboard.SetText(text);
                         return;
                     }
                 }
@@ -2117,7 +2117,7 @@ namespace dDeltaSolutions.Spy
                     {
                         var legacyPattern = node.Element.GetCurrentPattern(UIA_PatternIds.UIA_LegacyIAccessiblePatternId) as IUIAutomationLegacyIAccessiblePattern;
                         string value = legacyPattern.CurrentValue;
-                        System.Windows.Clipboard.SetText(value);
+                        System.Windows.Forms.Clipboard.SetText(value);
                         return;
                     }
                 }
@@ -2126,7 +2126,7 @@ namespace dDeltaSolutions.Spy
 
             try
             {
-                System.Windows.Clipboard.SetText(attribute.Value);
+                System.Windows.Forms.Clipboard.SetText(attribute.Value);
             }
             catch { }
         }
